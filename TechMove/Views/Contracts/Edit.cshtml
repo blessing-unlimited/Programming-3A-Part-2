@@ -1,0 +1,79 @@
+﻿@model TechMove.Models.ViewModel.ContractViewModel
+@using TechMove.Models.ViewModel
+
+@{
+    ViewData["Title"] = "Edit Contract";
+}
+
+<h1>Edit Contract</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ContractId" />
+
+            <div class="mb-3">
+                <label asp-for="ClientId" class="form-label">Client</label>
+                <select asp-for="ClientId" class="form-select" asp-items="ViewBag.ClientId"></select>
+                <span asp-validation-for="ClientId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="StartDate" class="form-label"></label>
+                <input asp-for="StartDate" class="form-control" type="date" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="EndDate" class="form-label"></label>
+                <input asp-for="EndDate" class="form-control" type="date" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Status" class="form-label"></label>
+                <select asp-for="Status" class="form-select">
+                    @foreach (var s in ContractViewModel.AllowedStatuses)
+                    {
+                        <option value="@s">@s</option>
+                    }
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ServiceLevel" class="form-label"></label>
+                <input asp-for="ServiceLevel" class="form-control" />
+                <span asp-validation-for="ServiceLevel" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Current Agreement</label>
+                @if (!string.IsNullOrWhiteSpace(Model.CurrentFileName))
+                {
+                    <div class="alert alert-info p-2">
+                        <strong>Current file:</strong> @Model.CurrentFileName
+                    </div>
+                }
+                else
+                {
+                    <div class="text-muted mb-2">No file currently uploaded.</div>
+                }
+
+                <label asp-for="SignedAgreementFile" class="form-label">Upload New Agreement (Optional)</label>
+                <input asp-for="SignedAgreementFile" class="form-control" type="file" />
+                <span asp-validation-for="SignedAgreementFile" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

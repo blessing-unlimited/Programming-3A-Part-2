@@ -1,0 +1,89 @@
+﻿@model TechMove.Models.ViewModel.ContractIndexViewModel
+@using TechMove.Models.ViewModel
+
+@{
+    ViewData["Title"] = "Search contracts";
+}
+
+<h2>Search contracts</h2>
+
+<form asp-action="Index" method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label asp-for="Filter.FromDate" class="form-label"></label>
+        <input asp-for="Filter.FromDate" class="form-control" type="date" />
+        <span asp-validation-for="Filter.FromDate" class="text-danger"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Filter.ToDate" class="form-label"></label>
+        <input asp-for="Filter.ToDate" class="form-control" type="date" />
+        <span asp-validation-for="Filter.ToDate" class="text-danger"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Filter.Status" class="form-label"></label>
+        <select asp-for="Filter.Status" class="form-select">
+            <option value="">All statuses</option>
+            @foreach (var s in ContractFilterViewModel.AllowedStatuses)
+            {
+                <option value="@s">@s</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary me-2">Search</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+    </div>
+</form>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create contract</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Client</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Status</th>
+            <th>Service level</th>
+            <th>Agreement</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model.Contracts)
+        {
+            <tr>
+                <td><a asp-action="Details" asp-route-id="@c.ContractId">@c.ContractId</a></td>
+                <td>@(c.Client?.ClientName ?? "—")</td>
+                <td>@c.StartDate</td>
+                <td>@c.EndDate</td>
+                <td>@c.Status</td>
+                <td>@c.ServiceLevel</td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(c.SignedAgreementPath))
+                    {
+                        <a href="/@c.SignedAgreementPath" target="_blank" title="Download agreement">
+                            <i class="bi bi-file-earmark-pdf"></i> @c.SignedAgreementFileName
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">No file</span>
+                    }
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a asp-action="Edit" asp-route-id="@c.ContractId" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@c.ContractId" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

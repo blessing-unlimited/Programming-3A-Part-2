@@ -1,0 +1,58 @@
+﻿@model TechMove.Models.ViewModel.ContractViewModel
+
+@{
+    ViewData["Title"] = "Create Contract";
+}
+
+<h2>Create Contract</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="ClientId" class="form-label"></label>
+        <select asp-for="ClientId" class="form-select" asp-items="ViewBag.ClientId">
+            <option value="">-- Select client --</option>
+        </select>
+        <span asp-validation-for="ClientId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StartDate" class="form-label"></label>
+        <input  type="date"  asp-for="StartDate" class="form-control" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="EndDate" class="form-label"></label>
+        <input type="date" asp-for="EndDate" class="form-control" />
+        <span asp-validation-for="EndDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option value="Draft">Draft</option>
+            <option value="Active">Active</option>
+            <option value="Expired">Expired</option>
+            <option value="On Hold">On Hold</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ServiceLevel" class="form-label"></label>
+        <input asp-for="ServiceLevel" class="form-control" />
+        <span asp-validation-for="ServiceLevel" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SignedAgreementFile" class="form-label"></label>
+        <input asp-for="SignedAgreementFile" type="file" class="form-control" />
+        <span asp-validation-for="SignedAgreementFile" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Contract</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,21 @@
+﻿@model TechMove.Models.Client
+
+@{
+    ViewData["Title"] = "Client Details";
+}
+
+<h2>Client Details</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Client ID</dt>
+    <dd class="col-sm-9">@Model.ClientId</dd>
+
+    <dt class="col-sm-3">Client Name</dt>
+    <dd class="col-sm-9">@Model.ClientName</dd>
+
+    <dt class="col-sm-3">Contact Details</dt>
+    <dd class="col-sm-9">@Model.ContactDetails</dd>
+
+    <dt class="col-sm-3">Region</dt>
+    <dd class="col-sm-9">@Model.Region</dd>
+</dl>
